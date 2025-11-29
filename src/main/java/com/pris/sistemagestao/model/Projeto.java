@@ -3,6 +3,7 @@ package com.pris.sistemagestao.model;
 import com.pris.sistemagestao.enums.StatusProjeto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,6 +31,14 @@ public class Projeto {
 
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
     private List<Tarefa> tarefas;
+
+    @ManyToMany
+    @JoinTable(
+        name = "projeto_participantes",
+        joinColumns = @JoinColumn(name = "id_projeto"),
+        inverseJoinColumns = @JoinColumn(name = "id_usuario")
+    )
+    private List<Usuario> participantes = new ArrayList<>();
 
     public Projeto() {}
 
@@ -81,5 +90,10 @@ public class Projeto {
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
     }
-
+    public List<Usuario> getParticipantes() {
+        return participantes;
+    }
+    public void setParticipantes(List<Usuario> participantes) {
+        this.participantes = participantes;
+    }
 }
