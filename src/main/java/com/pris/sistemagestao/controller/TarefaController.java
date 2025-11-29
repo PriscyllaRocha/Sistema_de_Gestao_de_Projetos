@@ -1,6 +1,7 @@
 package com.pris.sistemagestao.controller;
 
 import com.pris.sistemagestao.model.Tarefa;
+import com.pris.sistemagestao.model.Usuario;
 import com.pris.sistemagestao.service.TarefaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class TarefaController {
         return tarefaService.criar(tarefa);
     }
 
-    @GetMapping 
+    @GetMapping
     public List<Tarefa> listar() {
         return tarefaService.listarTodos();
     }
@@ -39,5 +40,15 @@ public class TarefaController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         tarefaService.deletar(id);
+    }
+
+    @PutMapping("/{id}/atribuir-usuario")
+    public Tarefa atribuirUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return tarefaService.atribuirUsuario(id, usuario);
+    }
+
+    @PutMapping("/{id}/remover-usuario")
+    public Tarefa removerUsuario(@PathVariable Long id) {
+        return tarefaService.removerUsuario(id);
     }
 }

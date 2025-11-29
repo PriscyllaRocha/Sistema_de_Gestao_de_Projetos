@@ -1,6 +1,7 @@
 package com.pris.sistemagestao.service;
 
 import com.pris.sistemagestao.model.Tarefa;
+import com.pris.sistemagestao.model.Usuario;
 import com.pris.sistemagestao.repository.TarefaRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,21 @@ public class TarefaService {
 
     public void deletar(Long id) {
         tarefaRepository.deleteById(id);
+    }
+
+    public Tarefa atribuirUsuario(Long tarefaId, Usuario usuario) {
+        Tarefa tarefa = buscarPorId(tarefaId);
+        if (tarefa == null) return null;
+
+        tarefa.setUsuario(usuario);
+        return tarefaRepository.save(tarefa);
+    }
+
+    public Tarefa removerUsuario(Long tarefaId) {
+        Tarefa tarefa = buscarPorId(tarefaId);
+        if (tarefa == null) return null;
+
+        tarefa.setUsuario(null);
+        return tarefaRepository.save(tarefa);
     }
 }
