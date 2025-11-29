@@ -47,7 +47,6 @@ public class ProjetoService {
         projetoRepository.deleteById(id);
     }
 
-    // ===== Novos métodos =====
     public Projeto adicionarParticipante(Long projetoId, Usuario usuario) {
         Projeto projeto = buscarPorId(projetoId);
         if (projeto == null) return null;

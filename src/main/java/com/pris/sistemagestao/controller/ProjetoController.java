@@ -1,6 +1,7 @@
 package com.pris.sistemagestao.controller;
 
 import com.pris.sistemagestao.model.Projeto;
+import com.pris.sistemagestao.model.Usuario;
 import com.pris.sistemagestao.service.ProjetoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,15 @@ public class ProjetoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         projetoService.deletar(id);
+    }
+
+    @PutMapping("/{id}/adicionar-participante")
+    public Projeto adicionarParticipante(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return projetoService.adicionarParticipante(id, usuario);
+    }
+
+    @PutMapping("/{id}/remover-participante")
+    public Projeto removerParticipante(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return projetoService.removerParticipante(id, usuario);
     }
 }
