@@ -3,7 +3,9 @@ package com.pris.sistemagestao.controller;
 import com.pris.sistemagestao.model.Projeto;
 import com.pris.sistemagestao.model.Usuario;
 import com.pris.sistemagestao.service.ProjetoService;
+import com.pris.sistemagestao.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -11,19 +13,27 @@ import java.util.List;
 public class ProjetoController {
 
     private final ProjetoService projetoService;
+    private final UsuarioService usuarioService;
 
-    public ProjetoController(ProjetoService projetoService) {
+    public ProjetoController(ProjetoService projetoService, UsuarioService usuarioService) {
         this.projetoService = projetoService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping
-    public Projeto criar(@RequestBody Projeto projeto) { return projetoService.criar(projeto); }
+    public Projeto criar(@RequestBody Projeto projeto) {
+        return projetoService.criar(projeto);
+    }
 
     @GetMapping
-    public List<Projeto> listar() { return projetoService.listarTodos(); }
+    public List<Projeto> listar() {
+        return projetoService.listarTodos();
+    }
 
     @GetMapping("/{id}")
-    public Projeto buscarPorId(@PathVariable Long id) { return projetoService.buscarPorId(id); }
+    public Projeto buscarPorId(@PathVariable Long id) {
+        return projetoService.buscarPorId(id);
+    }
 
     @PutMapping("/{id}")
     public Projeto atualizar(@PathVariable Long id, @RequestBody Projeto projeto) {
@@ -31,25 +41,21 @@ public class ProjetoController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) { projetoService.deletar(id); }
-
-    @PutMapping("/{projetoId}/usuarios/{usuarioId}")
-    public Projeto adicionarUsuario(@PathVariable Long projetoId, @PathVariable Long usuarioId) {
-        return projetoService.adicionarUsuario(projetoId, usuarioId);
+    public void deletar(@PathVariable Long id) {
+        projetoService.deletar(id);
     }
 
-    @DeleteMapping("/{projetoId}/usuarios/{usuarioId}")
-    public Projeto removerUsuario(@PathVariable Long projetoId, @PathVariable Long usuarioId) {
-        return projetoService.removerUsuario(projetoId, usuarioId);
+    @PostMapping("/{idProjeto}/usuarios/{idUsuario}")
+    public Projeto adicionarUsuario(@PathVariable Long idProjeto, @PathVariable Long idUsuario) {
+        Projeto projeto = projetoService.buscarPorId(idProjeto);
+        Usuario usuario = usuarioService.buscarPorId(idUsuario);
+        return projetoService.adicionarUsuario(projeto, usuario);
     }
 
-    @GetMapping("/{projetoId}/usuarios")
-    public List<Usuario> listarUsuariosDoProjeto(@PathVariable Long projetoId) {
-        return projetoService.listarUsuariosDoProjeto(projetoId);
-    }
-
-    @GetMapping("/usuario/{usuarioId}")
-    public List<Projeto> listarProjetosDoUsuario(@PathVariable Long usuarioId) {
-        return projetoService.listarProjetosDoUsuario(usuarioId);
+    @DeleteMapping("/{idProjeto}/usuarios/{idUsuario}")
+    public Projeto removerUsuario(@PathVariable Long idProjeto, @PathVariable Long idUsuario) {
+        Projeto projeto = projetoService.buscarPorId(idProjeto);
+        Usuario usuario = usuarioService.buscarPorId(idUsuario);
+        return projetoService.removerUsuario(projeto, usuario);
     }
 }

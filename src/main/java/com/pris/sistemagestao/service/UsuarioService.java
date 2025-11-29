@@ -1,10 +1,12 @@
 package com.pris.sistemagestao.service;
 
 import com.pris.sistemagestao.model.Usuario;
+import com.pris.sistemagestao.model.Projeto;
 import com.pris.sistemagestao.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class UsuarioService {
@@ -37,11 +39,26 @@ public class UsuarioService {
         existente.setSenha(usuarioAtualizado.getSenha());
         existente.setDataNascimento(usuarioAtualizado.getDataNascimento());
         existente.setStatus(usuarioAtualizado.getStatus());
+        existente.setProjetos(usuarioAtualizado.getProjetos());
 
         return usuarioRepository.save(existente);
     }
 
     public void deletar(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    public List<Projeto> listarProjetos(Usuario usuario) {
+        return new ArrayList<>(usuario.getProjetos());
+    }
+
+    public Usuario adicionarProjeto(Usuario usuario, Projeto projeto) {
+        usuario.getProjetos().add(projeto);
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario removerProjeto(Usuario usuario, Projeto projeto) {
+        usuario.getProjetos().remove(projeto);
+        return usuarioRepository.save(usuario);
     }
 }

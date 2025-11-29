@@ -3,7 +3,10 @@ package com.pris.sistemagestao.model;
 import com.pris.sistemagestao.enums.StatusProjeto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "projetos")
@@ -29,34 +32,37 @@ public class Projeto {
     private Usuario responsavel;
 
     @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
-    private List<Tarefa> tarefas;
+    private List<Tarefa> tarefas = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "projeto_usuario",
-        joinColumns = @JoinColumn(name = "projeto_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
-    private List<Usuario> usuarios;
+    @ManyToMany(mappedBy = "projetos")
+    private Set<Usuario> usuarios = new HashSet<>();
 
     public Projeto() {}
 
     public Long getIdProjeto() { return idProjeto; }
     public void setIdProjeto(Long idProjeto) { this.idProjeto = idProjeto; }
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
+
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
+
     public LocalDate getDataInicio() { return dataInicio; }
     public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+
     public LocalDate getDataConclusao() { return dataConclusao; }
     public void setDataConclusao(LocalDate dataConclusao) { this.dataConclusao = dataConclusao; }
+
     public StatusProjeto getStatus() { return status; }
     public void setStatus(StatusProjeto status) { this.status = status; }
+
     public Usuario getResponsavel() { return responsavel; }
     public void setResponsavel(Usuario responsavel) { this.responsavel = responsavel; }
+
     public List<Tarefa> getTarefas() { return tarefas; }
     public void setTarefas(List<Tarefa> tarefas) { this.tarefas = tarefas; }
-    public List<Usuario> getUsuarios() { return usuarios; }
-    public void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios; }
+
+    public Set<Usuario> getUsuarios() { return usuarios; }
+    public void setUsuarios(Set<Usuario> usuarios) { this.usuarios = usuarios; }
 }
