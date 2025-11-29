@@ -3,7 +3,6 @@ package com.pris.sistemagestao.model;
 import com.pris.sistemagestao.enums.StatusProjeto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,66 +33,30 @@ public class Projeto {
 
     @ManyToMany
     @JoinTable(
-        name = "projeto_participantes",
-        joinColumns = @JoinColumn(name = "id_projeto"),
-        inverseJoinColumns = @JoinColumn(name = "id_usuario")
+        name = "projeto_usuario",
+        joinColumns = @JoinColumn(name = "projeto_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private List<Usuario> participantes = new ArrayList<>();
+    private List<Usuario> usuarios;
 
     public Projeto() {}
 
-    public Long getIdProjeto() {
-        return idProjeto;
-    }
-    public void setIdProjeto(Long idProjeto) {
-        this.idProjeto = idProjeto;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-    public LocalDate getDataConclusao() {
-        return dataConclusao;
-    }
-    public void setDataConclusao(LocalDate dataConclusao) {
-        this.dataConclusao = dataConclusao;
-    }
-    public StatusProjeto getStatus() {
-        return status;
-    }
-    public void setStatus(StatusProjeto status) {
-        this.status = status;
-    }
-    public Usuario getResponsavel() {
-        return responsavel;
-    }
-    public void setResponsavel(Usuario responsavel) {
-        this.responsavel = responsavel;
-    }
-    public List<Tarefa> getTarefas() {
-        return tarefas;
-    }
-    public void setTarefas(List<Tarefa> tarefas) {
-        this.tarefas = tarefas;
-    }
-    public List<Usuario> getParticipantes() {
-        return participantes;
-    }
-    public void setParticipantes(List<Usuario> participantes) {
-        this.participantes = participantes;
-    }
+    public Long getIdProjeto() { return idProjeto; }
+    public void setIdProjeto(Long idProjeto) { this.idProjeto = idProjeto; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public LocalDate getDataInicio() { return dataInicio; }
+    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+    public LocalDate getDataConclusao() { return dataConclusao; }
+    public void setDataConclusao(LocalDate dataConclusao) { this.dataConclusao = dataConclusao; }
+    public StatusProjeto getStatus() { return status; }
+    public void setStatus(StatusProjeto status) { this.status = status; }
+    public Usuario getResponsavel() { return responsavel; }
+    public void setResponsavel(Usuario responsavel) { this.responsavel = responsavel; }
+    public List<Tarefa> getTarefas() { return tarefas; }
+    public void setTarefas(List<Tarefa> tarefas) { this.tarefas = tarefas; }
+    public List<Usuario> getUsuarios() { return usuarios; }
+    public void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios; }
 }
